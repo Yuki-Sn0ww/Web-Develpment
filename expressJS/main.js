@@ -10,7 +10,7 @@ app.get('/', (req, res) => {  // basic route
     res.send('hello snow')
 })
 
-// '/' - the homepage path
+// '/' - the homepage path,
 // req - request object (contains info about the incoming request)
 // res - response object (used to send data back)
 // res.send() - sends a response to the client
