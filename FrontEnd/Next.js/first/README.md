@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Notes
 
-## Getting Started
+## What is Next.js?
 
-First, run the development server:
+- A **framework built on top of React**, used to make large, production-ready projects
+- Gives you everything in one box: routing, backend APIs, SEO, and optimized rendering
+
+---
+
+## Key Features
+
+- **File-based Routing** — your folder structure defines your URLs, no extra library needed
+- **Optimized Rendering** — supports SSR, SSG, and CSR out of the box
+- **API Routes** — build backend endpoints directly inside your Next.js project
+- **Middleware** — easy request handling and authentication
+
+---
+
+## Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx create-next-app@latest
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Make sure Node.js is installed before running this command.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Two Ways to Use Next.js
 
-## Learn More
+| Router | Status | Notes |
+|---|---|---|
+| **App Router** (`/app`) | ✅ Latest (use this) | Introduced in Next.js 13 |
+| **Pages Router** (`/pages`) | Legacy | Still works, but outdated |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## File-Based Routing (App Router)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Inside the `app` folder, **every folder becomes a route** and needs a `page.jsx` inside it.
 
-## Deploy on Vercel
+```
+app/
+├── page.jsx           →   localhost:3000/
+├── about/
+│   └── page.jsx       →   localhost:3000/about
+└── contact/
+    └── page.jsx       →   localhost:3000/contact
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Components
+
+- Create reusable components inside a `components/` folder at the root
+- Example: `components/Navbar.jsx`
+
+---
+
+## The `@` Import Alias
+
+The `@` symbol points to the **outermost (root) directory** of your project.
+
+```js
+// ❌ Without alias — confusing relative paths
+import Navbar from "../../../components/Navbar";
+
+// ✅ With alias — clean and simple
+import Navbar from "@/components/Navbar";
+```
+
+---
+
+## Useful Imports
+
+```js
+// Client-side navigation
+import { useRouter } from "next/navigation";
+```
+
+---
+
+## Quick Recap
+
+| Concept | What it does |
+|---|---|
+| `app/page.jsx` | Homepage UI |
+| `app/about/page.jsx` | `/about` route |
+| `layout.jsx` | Shared UI (Navbar, Footer) |
+| `@/components/...` | Clean root-level imports |
+| API Routes | Backend inside Next.js |
