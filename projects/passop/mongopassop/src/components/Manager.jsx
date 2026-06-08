@@ -52,10 +52,14 @@ function Manager() {
     });
   };
   useEffect(() => {
-    let lspasswords = JSON.parse(localStorage.getItem("passwords"));
-    if (lspasswords) {
-      setpasswords(lspasswords);
+    const fetchPasswords = async () => {
+     let response = await fetch('http://localhost:3000/api/getPasswords');
+      let data = await response.json();
+      if (data) {
+        setpasswords(data);
+      }
     }
+    fetchPasswords();
   }, []);
 
   return (

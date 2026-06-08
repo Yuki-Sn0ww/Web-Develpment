@@ -1,8 +1,10 @@
 import express from "express"
 import { MongoClient } from 'mongodb'
 import 'dotenv/config'
+import cors from "cors"
 const app = express();
 const port = 3000;
+app.use(cors())
 
 const client = new MongoClient(process.env.MONGO_URL);
 await client.connect();
@@ -14,37 +16,23 @@ app.get('/', (req, res) => {
   res.send('Hello World24!');
 });
 
-app.get('/api/getPasswords', (req, res) => {
+app.get('/api/getPasswords', async (req, res) => {
+  const passwords = await collection.find({}).toArray();
+  res.json(passwords);
   
-  res.send('Hello World24!');
 });
 
 app.post('/api/savePAsswords', (req, res) => {
-  console.log('hello')
-  res.send('Hello World24!');
+
 });
 
 app.put('/api/updatePasswords/:id', (req, res) => {
-  console.log('hello')
-  res.send('Hello World24!');
-});
-
-app.delete('/api/deletePasswords/:id', (req, res) => {
-  console.log('hello')
-  res.send('Hello World24!');
-});
-
-
-app.get('/api/passwords', async (req, res) => {
-  const result = await collection.insertOne({
-    websiteName: "google",
-    url: "google.com",
-    password: "test123"
-  });
-  res.json(result)
   
 });
 
+app.delete('/api/deletePasswords/:id', (req, res) => {
+  
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
