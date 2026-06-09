@@ -5,61 +5,89 @@ import { FiEdit2 } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-
 function Manager() {
   const [form, setform] = useState({
     websiteName: "",
     url: "",
     password: "",
-    id: "",
   });
+
   const [passwords, setpasswords] = useState([]);
+
+  const reFetch = async () => {
+    const response = await fetch("http://localhost:3000/api/getPasswords");
+    const data = await response.json();
+    setpasswords(data);
+  };
 
   const handleChange = (e) => {
     setform({ ...form, [e.target.name]: e.target.value });
   };
-  const savePassword = (e) => {
+
+  const savePassword = async (e) => {
     if (!form.websiteName || !form.url || !form.password) {
       alert("Please fill in all fields!");
       return;
     }
-    if (form.id) {
-      let index = passwords.findIndex((item) => item.id === form.id);
+    if (form._id) {
+      let index = passwords.findIndex((item) => item._id === form._id);
       let newPasswords = [...passwords];
       newPasswords[index] = { ...form };
       setpasswords(newPasswords);
       console.log("saving:", newPasswords);
-      localStorage.setItem("passwords", JSON.stringify(newPasswords));
+      const editToDb = async (_id) => {
+        await fetch(`http://localhost:3000/api/updatePasswords/${_id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+      };
+      await editToDb(form._id);
     } else {
-      let newPasswords = [...passwords, { ...form, id: uuidv4() }];
+      let tempId = uuidv4();
+      let newPasswords = [...passwords, { ...form, _id: tempId }];
       setpasswords(newPasswords);
       console.log("saving:", newPasswords);
-      localStorage.setItem("passwords", JSON.stringify(newPasswords));
+      const saveToDb = async (form) => {
+        await fetch("http://localhost:3000/api/savePAsswords", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            websiteName: form.websiteName,
+            url: form.url,
+            password: form.password,
+          }),
+        });
+      };
+      await saveToDb(form);
     }
-    setform({ websiteName: "", url: "", password: "", id: "" });
+    setform({ websiteName: "", url: "", password: "", _id: "" });
+    reFetch();
   };
-  const handleDelete = (id) => {
-    let newPasswords = passwords.filter((item) => item.id !== id);
+
+  const handleDelete = (_id) => {
+    let newPasswords = passwords.filter((item) => item._id !== _id);
     setpasswords(newPasswords);
-    localStorage.setItem("passwords", JSON.stringify(newPasswords));
+    const updateDb = async () => {
+      await fetch(`http://localhost:3000/api/deletePAsswords/${_id}`, {
+        method: "DELETE",
+      });
+      reFetch();
+    };
+    updateDb();
   };
+
   const handleEdit = (item) => {
     setform({
       websiteName: item.websiteName,
       url: item.url,
       password: item.password,
-      id: item.id,
+      _id: item._id,
     });
   };
+
   useEffect(() => {
-    const fetchPasswords = async () => {
-     let response = await fetch('http://localhost:3000/api/getPasswords');
-      let data = await response.json();
-      if (data) {
-        setpasswords(data);
-      }
-    }
-    fetchPasswords();
+    reFetch();
   }, []);
 
   return (
@@ -113,19 +141,11 @@ function Manager() {
           <div className="container overflow-y-scroll ">
             <table className="w-full table-fixed ">
               <thead className="sticky top-0 z-10 bg-white">
-                <tr >
-                  <th className="  w-1/4 px-4 py-2 text-left">
-                    Website
-                  </th>
-                  <th className=" w-1/4 px-4 py-2 text-left">
-                    Username
-                  </th>
-                  <th className=" w-1/4 px-4 py-2 text-left">
-                    Password
-                  </th>
-                  <th className=" w-1/4 px-4 py-2 text-left">
-                    Action
-                  </th>
+                <tr>
+                  <th className="  w-1/4 px-4 py-2 text-left">Website</th>
+                  <th className=" w-1/4 px-4 py-2 text-left">Username</th>
+                  <th className=" w-1/4 px-4 py-2 text-left">Password</th>
+                  <th className=" w-1/4 px-4 py-2 text-left">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -144,7 +164,7 @@ function Manager() {
                       <td className="border-t-2 border-[#EDEAFF] w-1/4 px-4 py-2">
                         <button
                           className="mr-3"
-                          onClick={() => handleDelete(item.id)}
+                          onClick={() => handleDelete(item._id)}
                         >
                           <RiDeleteBinLine />
                         </button>

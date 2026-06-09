@@ -1,10 +1,11 @@
 import express from "express"
-import { MongoClient } from 'mongodb'
+import { MongoClient, ObjectId } from 'mongodb'
 import 'dotenv/config'
 import cors from "cors"
 const app = express();
 const port = 3000;
 app.use(cors())
+app.use(express.json())
 
 const client = new MongoClient(process.env.MONGO_URL);
 await client.connect();
@@ -19,21 +20,25 @@ app.get('/', (req, res) => {
 app.get('/api/getPasswords', async (req, res) => {
   const passwords = await collection.find({}).toArray();
   res.json(passwords);
+});
+
+app.post('/api/savePAsswords', async (req, res) => {
+  console.log(req.body)
+  const result = await collection.insertOne(req.body)
+  res.json(result)
+});
+
+app.put('/api/updatePasswords/:id', async (req, res) => {
+  const {_id, ...updateData} = req.body;
+  await collection.updateOne({_id : new ObjectId(req.params.id)}, {$set : updateData});
+  res.json({success : true});
   
 });
 
-app.post('/api/savePAsswords', (req, res) => {
-
+app.delete('/api/deletePasswords/:id', async (req, res) => {
+  await collection.deleteOne({_id : new ObjectId(req.params.id)});
+  res.json({success : true}); 
 });
-
-app.put('/api/updatePasswords/:id', (req, res) => {
-  
-});
-
-app.delete('/api/deletePasswords/:id', (req, res) => {
-  
-});
-
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Example app listening on http://localhost:${port}`);
 });
