@@ -2,7 +2,7 @@ import React from 'react'
 
 const Penguin = () => {
   return (
-    <div> <pre className="font-mono whitespace-pre leading-tight border">
+    <div> <pre className="font-mono whitespace-pre leading-tight">
 {`      .--.
      |o_o |
      |:_/ |
