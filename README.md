@@ -41,6 +41,9 @@ Web-Development/
 │       ├── intro_to_react/
 │       └── props_and_components/
 │
+├── 📂 projects/
+│   └── todo_list_app/
+│
 └── 📂 exercises/
     ├── clear_the_clutter/
     └── dummyData/
@@ -93,6 +96,42 @@ Web-Development/
 
 ---
 
+### 📦 Projects
+> Full applications built to consolidate learning
+
+| Project | Description |
+|---------|-------------|
+| ✅ **Todo List App** | A full-stack todo list application built with React and Express |
+
+---
+
+## 🏆 Hackathon Project — SkillBridge
+
+> **[Edtech-hackathon2026 →](https://github.com/Yuki-Sn0ww/Edtech-hackathon2026)**
+
+**SkillBridge** is a real-time intelligence platform that maps the gap between education and industry skill demands — built for Problem Statement #2: *Skill Gap Mapping Between Education & Industry*.
+
+### ✨ Key Features
+- 🎯 **Skill Gap Analyzer** — Select your target sector and current skills, get an instant readiness score with personalized course recommendations
+- 📊 **Live Dashboard** — Real-time stats with bar and radar charts for demand vs. supply comparison
+- 📈 **Market Trends** — Deep-dive into each sector with growth rate visualizations and live job data
+- 📚 **Course Browser** — Filter courses by sector and type (Course, Certification, Bootcamp, etc.)
+- 🔐 **User Auth** — Sign up, log in, and track your personal skill progress
+
+### 🛠️ Tech Stack
+
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
+![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=flat-square&logo=chartdotjs&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=flat-square&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-404D59?style=flat-square&logo=express)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=flat-square&logo=mongodb&logoColor=white)
+![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=flat-square&logo=mongoose&logoColor=white)
+
+---
+
 ## 🚀 My Learning Path
 
 ```
@@ -123,6 +162,7 @@ HTML & CSS  →  JavaScript  →  React (Frontend)
 
 | Date | What I Did |
 |------|------------|
+| Recent | Built **SkillBridge** — a full-stack skill gap mapping platform for a hackathon |
 | Recent | Learned about **Components and Props** in React |
 | Recent | Updated folder structure and learned about **Mongoose** |
 | Recent | Explored **MongoDB CRUD operations** |
